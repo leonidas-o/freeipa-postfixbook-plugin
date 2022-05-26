@@ -90,7 +90,6 @@ touch debugfiles.list
 %install
 rm -rf $RPM_BUILD_ROOT
 %__mkdir_p %buildroot/%_datadir/ipa/schema.d
-%__mkdir_p %buildroot/%_datadir/ipa/updates
 %__mkdir_p %buildroot/%_datadir/ipa/ui/js/plugins/%{plugin_name}
 
 sitelibs=%{ipa_python2_sitelib}
@@ -109,10 +108,6 @@ done
 
 for j in $(find plugin/schema.d -name '*.ldif') ; do
     %__cp $j %buildroot/%_datadir/ipa/schema.d
-done
-
-for j in $(find plugin/updates -name '*.update') ; do
-    %__cp $j %buildroot/%_datadir/ipa/updates
 done
 
 for j in $(find plugin/ui/ -name '*.js') ; do
@@ -138,7 +133,6 @@ fi
 %files
 %license LICENSE
 %_datadir/ipa/schema.d/*
-%_datadir/ipa/updates/*
 %_datadir/ipa/ui/js/plugins/%{plugin_name}/*
 
 %files -n python2-ipa-%{plugin_name}-server
