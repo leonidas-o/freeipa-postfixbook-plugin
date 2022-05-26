@@ -11,7 +11,7 @@ user.user.takes_params = user.user.takes_params + (
             "RFC822 Mailbox - mail alias"
         ),
         autofill=False,
-        pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+        pattern="^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$",
         pattern_errmsg="".join(
             'may only be "", '
             'or a valid email address (e.g. user@domain.com)'
