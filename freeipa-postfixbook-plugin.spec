@@ -12,7 +12,6 @@
 %global debug_package %{nil}
 %global plugin_name postfixbook
 
-%global ipa_python2_sitelib %{python2_sitelib}
 %if 0%{?fedora} > 26 || 0%{?rhel} > 7
 %global ipa_python3_sitelib %{python3_sitelib}
 %endif
@@ -35,39 +34,15 @@ BuildRequires: python3-ipaserver >= 4.6.0
 %endif
 
 
-# In RHEL 7 a version of IPA which supports external plugins was introduced
-# with a rebase to 4.4.0 and backports to it, so set expectations properly --
-# in upstream it was added in 4.4.1.
-%if 0%{?rhel}
-BuildRequires: python2-devel
-BuildRequires: python2-ipaserver >= 4.4.0
-Requires:      ipa-server-common >= 4.4.0
-%else
-BuildRequires:  python2-devel
-BuildRequires:  python2-ipaserver >= 4.4.1
-Requires:       ipa-server-common >= 4.4.1
-%endif
-
 # Enforce using Python 3 in Fedora 27
 %if 0%{?fedora} > 26 || 0%{?rhel} > 7
 Requires(post): python3-ipa-%{plugin_name}-server
 Requires: python3-ipa-%{plugin_name}-server
-%else
-Requires(post): python2-ipa-%{plugin_name}-server
-Requires: python2-ipa-%{plugin_name}-server
 %endif
 
 %description
 A module for FreeIPA to add 'postfix-book' schema
 
-%package -n python2-ipa-%{plugin_name}-server
-Summary: Server side of a module for FreeIPA to add 'postfix-book' schema
-License:        GPL
-Requires: python2-ipaserver
-
-%description  -n python2-ipa-%{plugin_name}-server
-A module for FreeIPA to add 'postfix-book' schema
-This package adds server-side support for Python 2 version of FreeIPA
 
 %if 0%{?fedora} > 26 || 0%{?rhel} > 7
 %package -n python3-ipa-%{plugin_name}-server
@@ -92,7 +67,6 @@ rm -rf $RPM_BUILD_ROOT
 %__mkdir_p %buildroot/%_datadir/ipa/schema.d
 %__mkdir_p %buildroot/%_datadir/ipa/ui/js/plugins/%{plugin_name}
 
-sitelibs=%{ipa_python2_sitelib}
 %if 0%{?fedora} > 26 || 0%{?rhel} > 7
 sitelibs="$sitelibs %{ipa_python3_sitelib}"
 %endif
@@ -117,8 +91,6 @@ done
 %posttrans
 %if 0%{?fedora} > 26 || 0%{?rhel} > 7
 ipa_interp=python3
-%else
-ipa_interp=python2
 %endif
 $ipa_interp -c "import sys; from ipaserver.install import installutils; sys.exit(0 if installutils.is_ipa_configured() else 1);" > /dev/null 2>&1
 
@@ -135,8 +107,6 @@ fi
 %_datadir/ipa/schema.d/*
 %_datadir/ipa/ui/js/plugins/%{plugin_name}/*
 
-%files -n python2-ipa-%{plugin_name}-server
-%ipa_python2_sitelib/ipaserver/plugins/*
 
 %if 0%{?fedora} > 26 || 0%{?rhel} > 7
 %files -n python3-ipa-%{plugin_name}-server
