@@ -1,12 +1,10 @@
 # This spec file provides facilities to build FreeIPA external plugins for
 # Fedora, RHEL (EPEL) and Rocky Linux. Support for external plugins was added to FreeIPA in
-# 4.4.1 (and backported to RHEL in IdM version 4.4.0) For Fedora 27 or later we
-# package both Python 2 and Python 3 versions in parallel. Fedora 27 defaults
+# 4.4.1 (and backported to RHEL in IdM version 4.4.0). Fedora 27 defaults
 # to Python 3.
 #
 # This includes the following components:
 # - main package (freeipa-postfixbook-plugin) that holds LDAP schema and JS code
-# - server packages for Python 2
 # - server packages for Python 3
 
 %global debug_package %{nil}
