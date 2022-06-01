@@ -52,7 +52,7 @@ RUN mkdir -p /data/etc/pki /tmp/var/tmp \
 
 Copy RPM packages to a clean workspace directory with the above mentioned Dockerfile:
 ```bash
-cd ~/workspace/freeipa-postfix-docker
+cd ~/workspace/freeipa-postfixbook-docker
 cp ~/rpmbuild/RPMS/noarch/* .
 # build the image
 podman build --tls-verify=false -f Dockerfile -t my-registry/freeipa/freeipa-server:rocky-8-pfb-4.9.8 .
