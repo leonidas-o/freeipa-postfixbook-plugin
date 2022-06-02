@@ -26,7 +26,7 @@ define([
                 { label: 'Mail quota' }
             ],
             tooltip: {
-                title: 'Mail quota limit in kilobytes',
+                title: '<p>Mail quota limit in kilobytes</p><p>Allowed values are "", "none", "default", specific values like e.g. "1024 KB" (default is "default")</p>',
                 html: true
             },
         });
