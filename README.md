@@ -2,20 +2,93 @@
 
 A module for FreeIPA to add 'postfix-book' schema.
 
-## RPM Packages
-To setup a development environment, it's recommended to create a VM and install all freeIPA dependencies.
-If the schema needs to be extended e.g. with postfix-book.schema. Bring it into a correct format (used `ol-schema-migrate.pl` script - https://directory.fedoraproject.org/docs/389ds/scripts.html)
 
-Setup VM:
+<br><br>
+
+## Development Environment
+
+To setup a development environment, it's recommended to create a VM and install all freeIPA dependencies.
+If the schema needs to be extended, bring it into a correct format (used `ol-schema-migrate.pl` script - https://directory.fedoraproject.org/docs/389ds/scripts.html)
+
+### Dependencies
 ```bash
 sudo su -
 # freeIPA dependencies
 dnf module enable idm:DL1
 dnf module install idm:DL1/server
+```
+
+### Installation
+```bash
+sudo su -
+# UI
+mkdir /usr/share/ipa/ui/js/plugins/postfixbook
+cd /usr/share/ipa/ui/js/plugins/postfixbook
+# Either create one or all needed .js files
+# Don't forget the main `postfixbook.js` which
+# loads the other .js sub-plugins
+vi postfixbook.js
+
+# Schema
+cd /usr/share/ipa/schema.d
+vi 75-postfixbook.ldif
+
+# CLI
+# Either create one or all needed .py files
+cd /usr/lib/python3.6/site-packages/ipaserver/plugins
+vi mailenabled.py
+
+# IPA Install
+ipa-server-install
+```
+
+
+### Troubleshooting
+While troubleshooting, you can update your plugin. To avoid any caching issues delete the cached python files:
+```bash
+cd /usr/lib/python3.6/site-packages/ipaserver/plugins
+rm __pycache__/mail*
+ipa-server-upgrade
+# when checking __pycache__, mail* file(s) should be re-compiled
+ls -la __pycache__
+```
+
+You can also uninstall FreeIPA and start again:
+```bash
+ipa-server-install --uninstall
+ipa-server-install
+```
+
+Some useful commands to evaluate the extension process:
+```bash
+# login
+kinit admin
+
+# Check if schema was extended
+# objectclasses
+ldapsearch -o ldif-wrap=no -D 'cn=Directory Manager' -W -x -s base -b 'cn=schema' objectclasses | grep -i mail
+# attributeTypes
+ldapsearch -o ldif-wrap=no -D 'cn=Directory Manager' -W -x -s base -b 'cn=schema' attributetypes | grep -i mail
+
+# Check if IPA sees the changes for your user
+ipa user-show
+# Return all entries
+ldapsearch -o ldif-wrap=no -b "dc=MYDOMAIN,dc=com" "(objectclass=*)"
+# Search For a Specific User
+ldapsearch -b "dc=MYDOMAIN,dc=com" "(uid=myuser)"
+ldapsearch -b "dc=MYDOMAIN,dc=com" "(cn=USERS_FIRSTNAME USERS_LASTNAME)"
+```
+
+
+
+<br><br>
+
+## RPM Packages
+
+Prepare VM for package build:
+```bash
 # build tools
 dnf -y install rpm-build rpmdevtools
-# podman
-dnf -y install podman
 ```
 
 As regular user create the packages:
@@ -32,9 +105,17 @@ rpmbuild -ba freeipa-postfixbook-plugin.spec
 ```
 
 
-## Docker Image
+<br><br>
 
-To use this plugin an own docker image should be created using the freeipa-server image as base:
+## Container Image
+
+Prepare VM for container image build:
+```bash
+# podman
+dnf -y install podman
+```
+
+To use this plugin an own container image should be created using the freeipa-server image as base:
 ```Dockerfile
 FROM my-registry/freeipa/freeipa-server:rocky-8-4.9.8
 # Copy rpm packages into container
@@ -63,3 +144,11 @@ podman push --tls-verify=false my-registry/freeipa/freeipa-server:rocky-8-pfb-4.
 > If having `curl: (77) error setting certificate verify locations` error when using `dnf install`
 > in a Dockerfile's `RUN` command, see: https://github.com/freeipa/freeipa-container/issues/305 and 
 > https://github.com/freeipa/freeipa-container/issues/457 for further information and workarounds.
+
+
+
+<br><br>
+
+## Useful Links
+- https://github.com/freeipa/freeipa/blob/master/doc/guide/guide.org#extending-existing-object%3E
+- 

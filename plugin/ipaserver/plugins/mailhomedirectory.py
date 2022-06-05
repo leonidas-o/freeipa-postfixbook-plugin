@@ -3,40 +3,33 @@ from ipalib.parameters import Str
 from ipalib.text import _
 from .baseldap import add_missing_object_class
 
-user.user.takes_params = user.user.takes_params + (
+user.user.takes_params += (
     Str(
-        "mailhomedirectory?",
-        cli_name="mailhomedirectory",
-        label=_("Mail home directory"),
+        'mailhomedirectory?',
+        cli_name='mailhomedirectory',
+        label=_('Mail home directory'),
         doc=_(
-            "The absolute path to the mail user home directory"
+            'The absolute path to the mail user home directory'
         ),
         autofill=False,
     ),
 )
 
-user.user.default_attributes.append("mailhomedirectory")
+user.user.default_attributes.append('mailhomedirectory')
 
 
-# pylint: disable-msg=unused-argument,invalid-name,line-too-long
-def useradd_precallback(self, ldap, dn, entry, attrs_list, *keys, **options):
+def useradd_precallback(self, ldap, dn, entry_attrs, attrs_list, *keys, **options):
 
-    #entry["objectclass"].append("postfixbookmailaccount")
-    add_missing_object_class(ldap, 'postfixbookmailaccount', dn)
+    add_missing_object_class(ldap, u'postfixbookmailaccount', dn, entry_attrs, update=False)
     return dn
 
 
 user.user_add.register_pre_callback(useradd_precallback)
 
 
-# pylint: disable-msg=unused-argument,invalid-name,line-too-long
-def usermod_precallback(self, ldap, dn, entry, attrs_list, *keys, **options):
+def usermod_precallback(self, ldap, dn, entry_attrs, attrs_list, *keys, **options):
 
-    #if "objectclass" not in entry.keys():
-    #    old_entry = ldap.get_entry(dn, ["objectclass"])
-    #    entry["objectclass"] = old_entry["objectclass"]
-    #entry["objectclass"].append("postfixbookmailaccount")
-    add_missing_object_class(ldap, 'postfixbookmailaccount', dn)
+    add_missing_object_class(ldap, u'postfixbookmailaccount', dn)
     return dn
 
 

@@ -5,9 +5,8 @@ define([
     
     // helper function
     function get_item(array, attr, value) {
-    for (var i=0,l=array.length; i<l; i++) {
-        if (array[i][attr] === value) 
-            return array[i];
+        for (var i=0,l=array.length; i<l; i++) {
+            if (array[i][attr] === value) return array[i];
         }
         return null;
     }

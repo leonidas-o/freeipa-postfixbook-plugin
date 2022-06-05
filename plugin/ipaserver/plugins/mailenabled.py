@@ -1,43 +1,35 @@
 from ipaserver.plugins import user
 from ipalib.parameters import Bool
-from ipalib import _
+from ipalib.text import _
 from .baseldap import add_missing_object_class
 
-user.user.takes_params = user.user.takes_params + (
+user.user.takes_params += (
     Bool(
-        "mailenabled?",
-        cli_name="mailenabled",
-        label=_("Mail enabled"),
+        'mailenabled?',
+        cli_name='mailenabled',
+        label=_('Mail enabled'),
         doc=_(
-            "Whether or not a mail is enabled for this user (default is false)."
+            'Whether or not a mail is enabled for this user (default is false).'
         ),
-        default=False,
         autofill=False,
     ),
 )
 
-user.user.default_attributes.append("mailenabled")
+user.user.default_attributes.append('mailenabled')
 
 
-# pylint: disable-msg=unused-argument,invalid-name,line-too-long
-def useradd_precallback(self, ldap, dn, entry, attrs_list, *keys, **options):
+def useradd_precallback(self, ldap, dn, entry_attrs, attrs_list, *keys, **options):
 
-    #entry["objectclass"].append("postfixbookmailaccount")
-    add_missing_object_class(ldap, 'postfixbookmailaccount', dn)
+    add_missing_object_class(ldap, u'postfixbookmailaccount', dn, entry_attrs, update=False)
     return dn
 
 
 user.user_add.register_pre_callback(useradd_precallback)
 
 
-# pylint: disable-msg=unused-argument,invalid-name,line-too-long
-def usermod_precallback(self, ldap, dn, entry, attrs_list, *keys, **options):
+def usermod_precallback(self, ldap, dn, entry_attrs, attrs_list, *keys, **options):
 
-    #if "objectclass" not in entry.keys():
-    #    old_entry = ldap.get_entry(dn, ["objectclass"])
-    #    entry["objectclass"] = old_entry["objectclass"]
-    #entry["objectclass"].append("postfixbookmailaccount")
-    add_missing_object_class(ldap, 'postfixbookmailaccount', dn)
+    add_missing_object_class(ldap, u'postfixbookmailaccount', dn)
     return dn
 
 

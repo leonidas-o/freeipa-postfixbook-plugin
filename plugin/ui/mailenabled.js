@@ -5,9 +5,8 @@ define([
     
     // helper function
     function get_item(array, attr, value) {
-    for (var i=0,l=array.length; i<l; i++) {
-        if (array[i][attr] === value) 
-            return array[i];
+        for (var i=0,l=array.length; i<l; i++) {
+            if (array[i][attr] === value) return array[i];
         }
         return null;
     }
@@ -19,8 +18,8 @@ define([
         var facet = get_item(IPA.user.entity_spec.facets, '$type', 'details');
         var section = get_item(facet.sections, 'name', 'misc');
         section.fields.push({
-            $type: 'checkbox', 
-            name: 'mailenabled', 
+            $type: 'checkbox',
+            name: 'mailenabled',
             flags: ['w_if_no_aci'],
             options: [
                 { label: 'Mail enabled' }
@@ -30,7 +29,7 @@ define([
                 html: true
             },
         });
-        return true;	
+        return true;
     };
 
     phases.on('customization', mail_enabled_plugin.add_mail_enabled_pre_op);
