@@ -3,7 +3,7 @@
 A module for FreeIPA to add 'postfix-book' schema.
 
 
-<br><br>
+<br>
 
 ## Development Environment
 
@@ -151,4 +151,3 @@ podman push --tls-verify=false my-registry/freeipa/freeipa-server:rocky-8-pfb-4.
 
 ## Useful Links
 - https://github.com/freeipa/freeipa/blob/master/doc/guide/guide.org#extending-existing-object%3E
-- 
