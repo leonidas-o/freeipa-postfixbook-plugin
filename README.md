@@ -169,3 +169,5 @@ podman push --tls-verify=false my-registry/freeipa/freeipa-server:rocky-8-pfb-4.
 ## Useful Links
 - https://github.com/freeipa/freeipa/blob/master/doc/guide/guide.org#extending-existing-object%3E
 - https://github.com/freeipa/freeipa/tree/master/install/ui/doc/guides/plugins
+- https://github.com/abbra/freeipa-userstatus-plugin
+- https://www.freeipa.org/images/5/5b/FreeIPA33-extending-freeipa.pdf
