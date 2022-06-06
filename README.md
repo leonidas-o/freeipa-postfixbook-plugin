@@ -11,14 +11,14 @@ For native approach, simply install the plugins
 ```
 dnf install /path/to/rpm-packages
 ```
-> [Github releases: https://github.com/leonidas-o/freeipa-postfixbook-plugin/releases](https://github.com/leonidas-o/freeipa-postfixbook-plugin/releases)
+> Github releases: [https://github.com/leonidas-o/freeipa-postfixbook-plugin/releases](https://github.com/leonidas-o/freeipa-postfixbook-plugin/releases)
 
 
 For container based approach, pull it from docker hub:
 ```bash
 podman pull leonidaso/freeipa-server:rocky-8-pfb-4.9.8
 ```
-> [Docker Hub: https://hub.docker.com/r/leonidaso/freeipa-server](https://hub.docker.com/r/leonidaso/freeipa-server)
+> Docker Hub: [https://hub.docker.com/r/leonidaso/freeipa-server](https://hub.docker.com/r/leonidaso/freeipa-server)
 
 
 <br>
