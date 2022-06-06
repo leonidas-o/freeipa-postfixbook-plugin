@@ -109,10 +109,12 @@ As regular user create the packages:
 # setup env and build
 mkdir -p ~/workspace/
 cd workspace
+rpmdev-setuptree
 git clone git@github.com:leonidas-o/freeipa-postfixbook-plugin.git
 cd freeipa-postfixbook-plugin
+# on update
+git pull
 git archive --prefix freeipa-postfixbook-plugin-0.9.0/ -o freeipa-postfixbook-plugin-0.9.0.tar.gz HEAD
-rpmdev-setuptree
 mv freeipa-postfixbook-plugin-0.9.0.tar.gz ~/rpmbuild/SOURCES/
 rpmbuild -ba freeipa-postfixbook-plugin.spec
 ```
@@ -149,6 +151,9 @@ Copy RPM packages to a clean workspace directory with the above mentioned Docker
 cd ~/workspace/freeipa-postfixbook-docker
 cp ~/rpmbuild/RPMS/noarch/* .
 # build the image
+# on update clean up old local images 
+# CAUTION: this command will remove all local images!
+podman rmi --all
 podman build --tls-verify=false -f Dockerfile -t my-registry/freeipa/freeipa-server:rocky-8-pfb-4.9.8 .
 podman image ls
 podman login --tls-verify=false my-registry
