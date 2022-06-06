@@ -5,6 +5,19 @@ A module for FreeIPA to add 'postfix-book' schema.
 
 <br>
 
+## Regular installation
+
+For native approach, simply install the plugins e.g. via `dnf install /path/to/the/rpm-packages`
+
+For container based approach, pull it from docker hub:
+```bash
+# docker pull leonidaso/freeipa-server:rocky-8-pfb-4.9.8
+podman pull leonidaso/freeipa-server:rocky-8-pfb-4.9.8
+```
+
+
+<br>
+
 ## Development Environment
 
 To setup a development environment, it's recommended to create a VM and install all freeIPA dependencies.
@@ -151,3 +164,4 @@ podman push --tls-verify=false my-registry/freeipa/freeipa-server:rocky-8-pfb-4.
 
 ## Useful Links
 - https://github.com/freeipa/freeipa/blob/master/doc/guide/guide.org#extending-existing-object%3E
+- https://github.com/freeipa/freeipa/tree/master/install/ui/doc/guides/plugins
