@@ -36,8 +36,8 @@ sudo su -
 # UI
 mkdir /usr/share/ipa/ui/js/plugins/postfixbook
 cd /usr/share/ipa/ui/js/plugins/postfixbook
-# Either create one or all needed .js files
-# Don't forget the main `postfixbook.js` which
+# create all needed .js files
+# CAUTION: Don't forget the main `postfixbook.js` which
 # loads the other .js sub-plugins
 vi postfixbook.js
 
@@ -46,7 +46,7 @@ cd /usr/share/ipa/schema.d
 vi 75-postfixbook.ldif
 
 # CLI
-# Either create one or all needed .py files
+# create all needed .py files
 cd /usr/lib/python3.6/site-packages/ipaserver/plugins
 vi mailenabled.py
 
@@ -75,7 +75,6 @@ Some useful commands to evaluate the extension process:
 ```bash
 # login
 kinit admin
-
 # Check if schema was extended
 # objectclasses
 ldapsearch -o ldif-wrap=no -D 'cn=Directory Manager' -W -x -s base -b 'cn=schema' objectclasses | grep -i mail
@@ -125,7 +124,6 @@ rpmbuild -ba freeipa-postfixbook-plugin.spec
 
 Prepare VM for container image build:
 ```bash
-# podman
 dnf -y install podman
 ```
 
