@@ -12,6 +12,7 @@ user.user.takes_params += (
         doc=_(
             'RFC822 Mailbox - mail alias'
         ),
+        # TODO: fix me, givenname and sn are not allowed to container whitespaces
         default_from=lambda givenname, sn: '%s.%s@%s' % (givenname.lower(), sn.lower(), api.env.realm.lower()),
         autofill=True,
         pattern='^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$',
