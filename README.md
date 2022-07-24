@@ -16,7 +16,7 @@ dnf install /path/to/rpm-packages
 
 For container based approach, pull it from docker hub:
 ```bash
-podman pull leonidaso/freeipa-server:rocky-8-pfb-4.9.8
+podman pull leonidaso/freeipa-server:rocky-8-4.9.8-pfb
 ```
 > Docker Hub: [https://hub.docker.com/r/leonidaso/freeipa-server](https://hub.docker.com/r/leonidaso/freeipa-server)
 
